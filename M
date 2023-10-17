@@ -1,0 +1,19 @@
+from xero_python.accounting import AccountingApi
+from xero_python.identity import IdentityApi
+from xero_python import Xero
+
+# Define your Xero client credentials
+client_id = 'YOUR_CLIENT_ID'
+client_secret = 'YOUR_CLIENT_SECRET'
+refresh_token = 'YOUR_REFRESH_TOKEN'
+
+# Create Xero client
+xero = Xero(client_id, client_secret, refresh_token)
+
+# Get all invoices
+invoices = xero.accounting_api.get_invoices(xero.tenants[0]['tenantId']).invoices
+
+# Check each invoice for a payment
+for invoice in invoices:
+    if not invoice.payments:
+        print(f"Invoice {invoice.invoice_number} has no associated payment.")
